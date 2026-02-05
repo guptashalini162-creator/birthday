@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Rish</title>
+  <style>
+    body {
+      background: #fff5f8;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+    }
+    .hidden { display: none; }
+    .cake { font-size: 120px; }
+    .candles { font-size: 80px; }
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      background: #ff6f91;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .message {
+      font-size: 26px;
+      color: #ff3d68;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cake" class="cake">🎂</div>
+
+  <div id="candles" class="candles hidden">🕯️🕯️🕯️</div>
+
+  <button id="blowBtn" class="hidden" onclick="blowCandles()">Blow Candles 💨</button>
+
+  <div id="message" class="message hidden">
+    Happy Birthday my love ❤️
+  </div>
+
+<script>
+  setTimeout(() => {
+    document.getElementById("candles").classList.remove("hidden");
+    document.getElementById("blowBtn").classList.remove("hidden");
+  }, 1500);
+
+  function blowCandles() {
+    document.getElementById("candles").innerHTML = "✨✨✨";
+    document.getElementById("message").classList.remove("hidden");
+    document.getElementById("blowBtn").style.display = "none";
+  }
+</script>
+
+</body>
+</html>
