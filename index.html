@@ -2,167 +2,75 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Rish</title>
+<title>Happy Birthday Rish ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(#fff0f5, #ffe6ee);
-  font-family: 'Segoe UI', sans-serif;
-  text-align: center;
-  overflow: hidden;
-}
-
-.hidden { display: none; }
-
-input {
-  padding: 12px;
-  font-size: 18px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-}
-
-button {
-  margin-top: 15px;
-  padding: 12px 28px;
-  font-size: 18px;
-  border-radius: 30px;
-  border: none;
-  background: #ff4d6d;
-  color: white;
-  cursor: pointer;
-}
-
-.cake {
-  font-size: 120px;
-  margin-top: 40px;
-  animation: pop 1s ease;
-}
-
-.name {
-  font-size: 28px;
-  color: #ff4d6d;
-}
-
-.candles {
-  font-size: 70px;
-  margin-top: 10px;
-}
-
-.message {
-  margin-top: 30px;
-  font-size: 22px;
-  color: #d6336c;
-  width: 85%;
-  margin: auto;
-}
-
-.final {
-  font-size: 32px;
-  color: #ff2f6d;
-  margin-top: 25px;
-  animation: glow 2s infinite;
-}
-
-@keyframes pop {
-  from {transform: scale(0);}
-  to {transform: scale(1);}
-}
-
-@keyframes glow {
-  0% {text-shadow: 0 0 5px #ff7aa2;}
-  50% {text-shadow: 0 0 20px #ff2f6d;}
-  100% {text-shadow: 0 0 5px #ff7aa2;}
-}
-
-/* hearts */
-.heart {
-  position: absolute;
-  font-size: 22px;
-  animation: floatUp 6s linear infinite;
-}
-@keyframes floatUp {
-  from {bottom: -10px; opacity: 1;}
-  to {bottom: 110%; opacity: 0;}
-}
-</style>
-</head>
-
-<body>
-
-<!-- PASSWORD SCREEN -->
-<div id="lock">
-  <h2>Only for Rish 💕</h2>
-  <p>Enter the password</p>
-  <input type="password" id="pass">
-  <br>
-  <button onclick="unlock()">Enter ❤️</button>
-</div>
-
-<!-- MAIN CONTENT -->
-<div id="main" class="hidden">
-  <div class="cake">🎂</div>
-  <div class="name">For Rish ❤️</div>
-  <div id="candles" class="candles">🕯️ 🕯️ 🕯️</div>
-  <button id="blowBtn" onclick="blow()">Make a wish & blow 💨</button>
-  <div id="msg" class="message"></div>
-  <div id="final" class="final hidden">Happy Birthday my love ❤️</div>
-</div>
-
-<!-- ROMANTIC MUSIC -->
-<audio id="music">
-  <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_8a60f96c33.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-const correctPassword = "rish0702";
-
-// unlock
-function unlock() {
-  const input = document.getElementById("pass").value;
-  if (input === correctPassword) {
-    document.getElementById("lock").style.display = "none";
-    document.getElementById("main").classList.remove("hidden");
-  } else {
-    alert("Hmm… try again 💕");
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
   }
-}
 
-// blow candles
-function blow() {
-  document.getElementById("candles").innerHTML = "✨ ✨ ✨";
-  document.getElementById("blowBtn").style.display = "none";
-  document.getElementById("music").play();
-  typeMessage();
-  setTimeout(() => {
-    document.getElementById("final").classList.remove("hidden");
-  }, 9000);
-}
-
-// romantic message
-const text =
-"Missing you extra today. Even with the distance, you make me feel close, safe, and deeply cared for. I love how calm you are, how you make time for me, and how your voice stays with me long after our calls. Today is about you, Rish — and I’m really grateful you’re mine.";
-let i = 0;
-
-function typeMessage() {
-  if (i < text.length) {
-    document.getElementById("msg").innerHTML += text.charAt(i);
-    i++;
-    setTimeout(typeMessage, 40);
+  .box {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    text-align: center;
+    width: 90%;
+    max-width: 360px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   }
-}
 
-// hearts
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}, 500);
-</script>
+  h1 {
+    color: #ff4d6d;
+    margin-bottom: 10px;
+  }
 
-</body>
-</html>
+  input {
+    padding: 10px;
+    width: 80%;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+
+  button {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 20px;
+    background: #ff4d6d;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+
+  button:hover {
+    background: #e63950;
+  }
+
+  #content { display: none; }
+
+  .cake {
+    font-size: 90px;
+    animation: pop 1s ease forwards;
+  }
+
+  @keyframes pop {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+  }
+
+  .candles {
+    font-size: 40px;
+    margin-top: 10px;
+  }
+
+  .msg {
+    margin-top: 15px;
