@@ -6,194 +6,183 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(180deg, #fff1f6, #ffe4ec);
-  font-family: 'Segoe UI', sans-serif;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(180deg,#fff1f6,#ffe4ec);
+  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-/* HEART RAIN */
-.heart {
-  position: absolute;
-  color: #ff6f91;
-  animation: fall 6s linear infinite;
-  opacity: 0.8;
+/* HEARTS */
+.heart{
+  position:absolute;
+  animation:fall linear forwards;
+  opacity:0.9;
 }
-@keyframes fall {
-  0% { transform: translateY(-10vh); opacity: 0; }
-  10% { opacity: 1; }
-  100% { transform: translateY(110vh); opacity: 0; }
+@keyframes fall{
+  from{transform:translateY(-10vh);}
+  to{transform:translateY(110vh);}
 }
 
-/* MAIN BOX */
-.box {
-  background: rgba(255,255,255,0.96);
-  padding: 26px;
-  border-radius: 22px;
-  text-align: center;
-  width: 90%;
-  max-width: 360px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-  z-index: 2;
+/* BOX */
+.box{
+  background:rgba(255,255,255,0.96);
+  padding:26px;
+  border-radius:22px;
+  text-align:center;
+  width:90%;
+  max-width:360px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.15);
+  z-index:2;
 }
 
-h1 { color: #ff4d6d; }
-p { color: #555; }
+.hidden{display:none;}
+h1{color:#ff4d6d;}
+p{color:#555;}
 
-input {
-  width: 85%;
-  padding: 10px;
-  border-radius: 12px;
-  border: 1px solid #ccc;
+input{
+  width:85%;
+  padding:10px;
+  border-radius:12px;
+  border:1px solid #ccc;
 }
 
-button {
-  padding: 10px 22px;
-  border-radius: 25px;
-  border: none;
-  background: #ff4d6d;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 10px;
+button{
+  padding:10px 22px;
+  border-radius:25px;
+  border:none;
+  background:#ff4d6d;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:10px;
 }
 
-.hidden { display: none; }
+.cake{font-size:90px;}
+.candles{font-size:40px;}
 
-.cake { font-size: 90px; margin-top: 10px; }
-.candles { font-size: 40px; margin: 10px 0; }
-
-.glow {
-  font-size: 22px;
-  color: #ff2f6d;
-  animation: glow 2s infinite;
+.photo{
+  width:100%;
+  border-radius:16px;
+  margin-top:10px;
 }
-@keyframes glow {
-  0% { text-shadow: 0 0 5px #ff9eb5; }
-  50% { text-shadow: 0 0 18px #ff2f6d; }
-  100% { text-shadow: 0 0 5px #ff9eb5; }
+
+.glow{
+  font-size:24px;
+  color:#ff2f6d;
+  animation:glow 2s infinite;
+}
+@keyframes glow{
+  0%{text-shadow:0 0 5px #ff9eb5;}
+  50%{text-shadow:0 0 20px #ff2f6d;}
+  100%{text-shadow:0 0 5px #ff9eb5;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- STAGE 1: PASSWORD -->
-<div class="box" id="stage1">
+<!-- STAGE 1 -->
+<div class="box" id="s1">
   <h1>🔒 A little secret</h1>
-  <p>Enter the date that means everything 🤍</p>
+  <p>Enter the date that changed things 🤍</p>
   <input id="pass" placeholder="DDMMYYYY">
-  <br>
-  <button onclick="checkPass()">Enter ✨</button>
+  <br><button onclick="check()">Enter ✨</button>
 </div>
 
-<!-- STAGE 2: TAP -->
-<div class="box hidden" id="stage2">
-  <h1>👀</h1>
-  <p>Tap anywhere 3 times…<br>someone made this with love</p>
+<!-- STAGE 2 -->
+<div class="box hidden" id="s2">
+  <p>Tap anywhere 3 times… slowly 🤍</p>
 </div>
 
-<!-- STAGE 3: CAKE -->
-<div class="box hidden" id="stage3">
+<!-- STAGE 3 -->
+<div class="box hidden" id="s3">
   <div class="cake">🎂</div>
-  <p>Okay… now it’s birthday time</p>
-  <button onclick="showCandles()">Next 🎉</button>
+  <p>It’s your day</p>
+  <button onclick="go(3,4)">Next 🎉</button>
 </div>
 
-<!-- STAGE 4: CANDLES -->
-<div class="box hidden" id="stage4">
+<!-- STAGE 4 -->
+<div class="box hidden" id="s4">
   <div class="candles">🕯️ 🕯️ 🕯️</div>
   <p>Press & hold to blow</p>
-  <button onmousedown="startBlow()" onmouseup="finishBlow()">Blow 💨</button>
+  <button onmousedown="hold=true" onmouseup="blow()">Blow 💨</button>
 </div>
 
-<!-- STAGE 5: QUESTION -->
-<div class="box hidden" id="stage5">
-  <p>One tiny question before you go ahead 🤍</p>
-  <button onclick="nextMessage()">Yes, I’m ready</button><br>
-  <button onclick="nextMessage()">Wait… I’m smiling</button>
+<!-- STAGE 5 -->
+<div class="box hidden" id="s5">
+  <p>Ready for something special? 🤍</p>
+  <button onclick="go(5,6)">Yes</button>
 </div>
 
 <!-- STAGE 6: MESSAGE -->
-<div class="box hidden" id="stage6">
-  <p id="line"></p>
-  <button onclick="nextLine()">Tap to continue 🤍</button>
+<div class="box hidden" id="s6">
+  <p id="text"></p>
+  <button onclick="next()">Tap 🤍</button>
 </div>
 
-<!-- STAGE 7: FINAL -->
-<div class="box hidden" id="stage7">
+<!-- STAGE 7: PHOTOS -->
+<div class="box hidden" id="s7">
+  <img id="memory" class="photo">
+  <p id="caption"></p>
+  <button onclick="nextPhoto()">Tap 🤍</button>
+</div>
+
+<!-- STAGE 8 -->
+<div class="box hidden" id="s8">
   <p class="glow">Happy Birthday my love ❤️</p>
 </div>
 
 <script>
-/* HEART RAIN */
-setInterval(() => {
-  const h = document.createElement("div");
-  h.className = "heart";
-  h.innerHTML = "❤️";
-  h.style.left = Math.random() * 100 + "vw";
-  h.style.fontSize = (14 + Math.random() * 10) + "px";
+/* HEARTS */
+let speed=600,size=20;
+let interval=setInterval(makeHeart,speed);
+function makeHeart(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=(size+Math.random()*12)+"px";
+  h.style.animationDuration=(3+Math.random()*2)+"s";
   document.body.appendChild(h);
-  setTimeout(() => h.remove(), 6000);
-}, 350);
-
-/* PASSWORD */
-function checkPass() {
-  if (document.getElementById("pass").value === "15102025") {
-    stage(1,2);
-  } else alert("That date is special 💔");
+  setTimeout(()=>h.remove(),5000);
 }
 
-/* TAP COUNT */
-let taps = 0;
-document.addEventListener("click", () => {
-  if (!document.getElementById("stage2").classList.contains("hidden")) {
+/* PASSWORD */
+function check(){
+  if(pass.value==="15102025")go(1,2);
+  else alert("That date matters 💔");
+}
+
+/* TAP */
+let taps=0;
+document.addEventListener("click",()=>{
+  if(!s2.classList.contains("hidden")){
     taps++;
-    if (taps === 3) stage(2,3);
+    if(taps===3)go(2,3);
   }
 });
 
 /* CANDLES */
-function showCandles() { stage(3,4); }
-let blowing = false;
-function startBlow() { blowing = true; }
-function finishBlow() {
-  if (blowing) {
-    document.querySelector(".candles").innerHTML = "✨ ✨ ✨";
-    stage(4,5);
+let hold=false;
+function blow(){
+  if(hold){
+    document.querySelector(".candles").innerHTML="✨ ✨ ✨";
+    go(4,5);
   }
 }
 
 /* MESSAGE */
-const messages = [
+const lines=[
   "Happy Birthday Rish 🤍",
-  "Even from miles away, you feel close — calm and comforting.",
-  "The way you manage everything and still choose me… sach mein, it means a lot.",
-  "I hope today reminds you how deeply you’re loved ✨"
+  "Even with distance, you feel close.",
+  "Calm. Caring. Steady. Sach mein.",
+  "Now… some memories 🫶"
 ];
-let idx = 0;
-
-function nextMessage() { stage(5,6); showLine(); }
-function showLine() {
-  document.getElementById("line").innerText = messages[idx];
-}
-function nextLine() {
-  idx++;
-  if (idx < messages.length) showLine();
-  else stage(6,7);
-}
-
-/* STAGE SWITCH */
-function stage(a,b){
-  document.getElementById("stage"+a).classList.add("hidden");
-  document.getElementById("stage"+b).classList.remove("hidden");
-}
-</script>
-
-</body>
-</html>
+let i=0;
+function next(){
+  if(i<lines
