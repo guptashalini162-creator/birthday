@@ -17,24 +17,22 @@ body {
   align-items: center;
 }
 
-/* floating hearts */
+/* HEART RAIN */
 .heart {
   position: absolute;
   color: #ff6f91;
-  font-size: 18px;
   animation: fall 6s linear infinite;
   opacity: 0.8;
 }
-
 @keyframes fall {
   0% { transform: translateY(-10vh); opacity: 0; }
   10% { opacity: 1; }
   100% { transform: translateY(110vh); opacity: 0; }
 }
 
-/* box */
+/* MAIN BOX */
 .box {
-  background: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.96);
   padding: 26px;
   border-radius: 22px;
   text-align: center;
@@ -44,66 +42,37 @@ body {
   z-index: 2;
 }
 
-h1 {
-  color: #ff4d6d;
-  margin-bottom: 12px;
-}
+h1 { color: #ff4d6d; }
+p { color: #555; }
 
 input {
   width: 85%;
   padding: 10px;
   border-radius: 12px;
   border: 1px solid #ccc;
-  margin-bottom: 10px;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 10px 22px;
   border-radius: 25px;
   border: none;
   background: #ff4d6d;
   color: white;
   font-size: 16px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
-button:hover {
-  background: #e63950;
-}
+.hidden { display: none; }
 
-#content { display: none; }
+.cake { font-size: 90px; margin-top: 10px; }
+.candles { font-size: 40px; margin: 10px 0; }
 
-.cake {
-  font-size: 90px;
-  animation: pop 1s ease forwards;
-}
-
-@keyframes pop {
-  from { transform: scale(0); }
-  to { transform: scale(1); }
-}
-
-.candles {
-  font-size: 40px;
-  margin-top: 8px;
-}
-
-.msg {
-  margin-top: 18px;
-  font-size: 15px;
-  color: #444;
-  line-height: 1.6;
-  display: none;
-}
-
-.final {
-  margin-top: 16px;
+.glow {
   font-size: 22px;
   color: #ff2f6d;
-  font-weight: 600;
   animation: glow 2s infinite;
 }
-
 @keyframes glow {
   0% { text-shadow: 0 0 5px #ff9eb5; }
   50% { text-shadow: 0 0 18px #ff2f6d; }
@@ -114,65 +83,116 @@ button:hover {
 
 <body>
 
-<!-- PASSWORD SCREEN -->
-<div class="box" id="login">
+<!-- STAGE 1: PASSWORD -->
+<div class="box" id="stage1">
   <h1>🔒 A little secret</h1>
-  <input type="password" id="pass" placeholder="DDMMYYYY 🤍">
+  <p>Enter the date that means everything 🤍</p>
+  <input id="pass" placeholder="DDMMYYYY">
   <br>
-  <button onclick="unlock()">Enter ✨</button>
+  <button onclick="checkPass()">Enter ✨</button>
 </div>
 
-<!-- MAIN CONTENT -->
-<div class="box" id="content">
+<!-- STAGE 2: TAP -->
+<div class="box hidden" id="stage2">
+  <h1>👀</h1>
+  <p>Tap anywhere 3 times…<br>someone made this with love</p>
+</div>
+
+<!-- STAGE 3: CAKE -->
+<div class="box hidden" id="stage3">
   <div class="cake">🎂</div>
+  <p>Okay… now it’s birthday time</p>
+  <button onclick="showCandles()">Next 🎉</button>
+</div>
+
+<!-- STAGE 4: CANDLES -->
+<div class="box hidden" id="stage4">
   <div class="candles">🕯️ 🕯️ 🕯️</div>
-  <button onclick="blow()">Blow the candles 💨</button>
+  <p>Press & hold to blow</p>
+  <button onmousedown="startBlow()" onmouseup="finishBlow()">Blow 💨</button>
+</div>
 
-  <div class="msg" id="message">
-    Happy Birthday Rish 🤍<br><br>
-    Even from miles away, you somehow feel close —
-    calm, steady, and comforting. The way you manage
-    everything and still choose me in between means
-    more than you’ll ever know… <em>sach mein</em>.
-    I hope today reminds you how loved you are ✨
-  </div>
+<!-- STAGE 5: QUESTION -->
+<div class="box hidden" id="stage5">
+  <p>One tiny question before you go ahead 🤍</p>
+  <button onclick="nextMessage()">Yes, I’m ready</button><br>
+  <button onclick="nextMessage()">Wait… I’m smiling</button>
+</div>
 
-  <div class="final" id="final" style="display:none;">
-    Happy Birthday my love ❤️
-  </div>
+<!-- STAGE 6: MESSAGE -->
+<div class="box hidden" id="stage6">
+  <p id="line"></p>
+  <button onclick="nextLine()">Tap to continue 🤍</button>
+</div>
+
+<!-- STAGE 7: FINAL -->
+<div class="box hidden" id="stage7">
+  <p class="glow">Happy Birthday my love ❤️</p>
 </div>
 
 <script>
-// password = 15 October 2025
-function unlock() {
-  const p = document.getElementById("pass").value;
-  if (p === "15102025") {
-    document.getElementById("login").style.display = "none";
-    document.getElementById("content").style.display = "block";
-  } else {
-    alert("That date means everything 💔");
+/* HEART RAIN */
+setInterval(() => {
+  const h = document.createElement("div");
+  h.className = "heart";
+  h.innerHTML = "❤️";
+  h.style.left = Math.random() * 100 + "vw";
+  h.style.fontSize = (14 + Math.random() * 10) + "px";
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 6000);
+}, 350);
+
+/* PASSWORD */
+function checkPass() {
+  if (document.getElementById("pass").value === "15102025") {
+    stage(1,2);
+  } else alert("That date is special 💔");
+}
+
+/* TAP COUNT */
+let taps = 0;
+document.addEventListener("click", () => {
+  if (!document.getElementById("stage2").classList.contains("hidden")) {
+    taps++;
+    if (taps === 3) stage(2,3);
+  }
+});
+
+/* CANDLES */
+function showCandles() { stage(3,4); }
+let blowing = false;
+function startBlow() { blowing = true; }
+function finishBlow() {
+  if (blowing) {
+    document.querySelector(".candles").innerHTML = "✨ ✨ ✨";
+    stage(4,5);
   }
 }
 
-// candle blow
-function blow() {
-  document.querySelector(".candles").innerHTML = "✨ ✨ ✨";
-  document.getElementById("message").style.display = "block";
-  setTimeout(() => {
-    document.getElementById("final").style.display = "block";
-  }, 1800);
+/* MESSAGE */
+const messages = [
+  "Happy Birthday Rish 🤍",
+  "Even from miles away, you feel close — calm and comforting.",
+  "The way you manage everything and still choose me… sach mein, it means a lot.",
+  "I hope today reminds you how deeply you’re loved ✨"
+];
+let idx = 0;
+
+function nextMessage() { stage(5,6); showLine(); }
+function showLine() {
+  document.getElementById("line").innerText = messages[idx];
+}
+function nextLine() {
+  idx++;
+  if (idx < messages.length) showLine();
+  else stage(6,7);
 }
 
-// heart rain
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (14 + Math.random() * 10) + "px";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}, 350);
+/* STAGE SWITCH */
+function stage(a,b){
+  document.getElementById("stage"+a).classList.add("hidden");
+  document.getElementById("stage"+b).classList.remove("hidden");
+}
 </script>
 
 </body>
