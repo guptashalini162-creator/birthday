@@ -1,57 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Happy Birthday Rish</title>
-  <style>
-    body {
-      background: #fff5f8;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding-top: 50px;
-    }
-    .hidden { display: none; }
-    .cake { font-size: 120px; }
-    .candles { font-size: 80px; }
-    button {
-      padding: 12px 24px;
-      font-size: 18px;
-      background: #ff6f91;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .message {
-      font-size: 26px;
-      color: #ff3d68;
-      margin-top: 30px;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Happy Birthday Rish</title>
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(#fff1f6, #ffe6ee);
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hidden { display: none; }
+
+.cake {
+  font-size: 120px;
+  margin-top: 40px;
+  animation: pop 1s ease;
+}
+
+.name {
+  font-size: 28px;
+  color: #ff4d6d;
+}
+
+.candles {
+  font-size: 70px;
+  margin-top: 10px;
+  animation: fadeIn 2s ease;
+}
+
+button {
+  margin-top: 20px;
+  padding: 12px 26px;
+  font-size: 18px;
+  border-radius: 30px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  cursor: pointer;
+}
+
+.message {
+  margin-top: 30px;
+  font-size: 22px;
+  color: #d6336c;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.final {
+  font-size: 30px;
+  color: #ff2f6d;
+  margin-top: 20px;
+  animation: glow 2s infinite;
+}
+
+/* animations */
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+@keyframes pop {
+  from {transform: scale(0);}
+  to {transform: scale(1);}
+}
+@keyframes glow {
+  0% {text-shadow: 0 0 5px #ff7aa2;}
+  50% {text-shadow: 0 0 20px #ff2f6d;}
+  100% {text-shadow: 0 0 5px #ff7aa2;}
+}
+
+/* hearts */
+.heart {
+  position: absolute;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+}
+@keyframes floatUp {
+  from {bottom: -10px; opacity: 1;}
+  to {bottom: 110%; opacity: 0;}
+}
+</style>
 </head>
+
 <body>
 
-  <div id="cake" class="cake">🎂</div>
+<div class="cake">🎂</div>
+<div class="name">For Rish ❤️</div>
 
-  <div id="candles" class="candles hidden">🕯️🕯️🕯️</div>
+<div id="candles" class="candles hidden">🕯️ 🕯️ 🕯️</div>
 
-  <button id="blowBtn" class="hidden" onclick="blowCandles()">Blow Candles 💨</button>
+<button id="blowBtn" class="hidden" onclick="blow()">Blow the candles 💨</button>
 
-  <div id="message" class="message hidden">
-    Happy Birthday my love ❤️
-  </div>
+<div id="msg" class="message"></div>
+<div id="final" class="final hidden">Happy Birthday my love ❤️</div>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3b7a9d5d6a.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-  setTimeout(() => {
-    document.getElementById("candles").classList.remove("hidden");
-    document.getElementById("blowBtn").classList.remove("hidden");
-  }, 1500);
+// show candles
+setTimeout(() => {
+  document.getElementById("candles").classList.remove("hidden");
+  document.getElementById("blowBtn").classList.remove("hidden");
+}, 1500);
 
-  function blowCandles() {
-    document.getElementById("candles").innerHTML = "✨✨✨";
-    document.getElementById("message").classList.remove("hidden");
-    document.getElementById("blowBtn").style.display = "none";
+// blow candles
+function blow() {
+  document.getElementById("candles").innerHTML = "✨ ✨ ✨";
+  document.getElementById("blowBtn").style.display = "none";
+  document.getElementById("music").play();
+  typeMessage();
+  setTimeout(() => {
+    document.getElementById("final").classList.remove("hidden");
+  }, 5500);
+}
+
+// typing effect
+const text = "Missing you today. Even from miles away, you make me feel close, cared for, and loved. I can’t wait to celebrate you properly… with me.";
+let i = 0;
+
+function typeMessage() {
+  if (i < text.length) {
+    document.getElementById("msg").innerHTML += text.charAt(i);
+    i++;
+    setTimeout(typeMessage, 50);
   }
+}
+
+// floating hearts
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 500);
 </script>
 
 </body>
