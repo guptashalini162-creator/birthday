@@ -8,13 +8,19 @@
 body {
   margin: 0;
   height: 100vh;
-  background: linear-gradient(#fff1f6, #ffe6ee);
+  background: linear-gradient(#fff0f5, #ffe6ee);
   font-family: 'Segoe UI', sans-serif;
   text-align: center;
   overflow: hidden;
 }
 
 .hidden { display: none; }
+
+.countdown {
+  font-size: 60px;
+  margin-top: 120px;
+  color: #ff4d6d;
+}
 
 .cake {
   font-size: 120px;
@@ -30,12 +36,11 @@ body {
 .candles {
   font-size: 70px;
   margin-top: 10px;
-  animation: fadeIn 2s ease;
 }
 
 button {
   margin-top: 20px;
-  padding: 12px 26px;
+  padding: 14px 30px;
   font-size: 18px;
   border-radius: 30px;
   border: none;
@@ -48,27 +53,23 @@ button {
   margin-top: 30px;
   font-size: 22px;
   color: #d6336c;
-  width: 80%;
+  width: 85%;
   margin-left: auto;
   margin-right: auto;
 }
 
 .final {
-  font-size: 30px;
+  font-size: 32px;
   color: #ff2f6d;
-  margin-top: 20px;
+  margin-top: 25px;
   animation: glow 2s infinite;
 }
 
-/* animations */
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
 @keyframes pop {
   from {transform: scale(0);}
   to {transform: scale(1);}
 }
+
 @keyframes glow {
   0% {text-shadow: 0 0 5px #ff7aa2;}
   50% {text-shadow: 0 0 20px #ff2f6d;}
@@ -78,63 +79,91 @@ button {
 /* hearts */
 .heart {
   position: absolute;
-  font-size: 20px;
+  font-size: 22px;
   animation: floatUp 6s linear infinite;
 }
 @keyframes floatUp {
   from {bottom: -10px; opacity: 1;}
   to {bottom: 110%; opacity: 0;}
 }
+
+/* confetti */
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: pink;
+  animation: fall 3s linear forwards;
+}
+@keyframes fall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="cake">🎂</div>
-<div class="name">For Rish ❤️</div>
+<div id="countdown" class="countdown">3</div>
 
-<div id="candles" class="candles hidden">🕯️ 🕯️ 🕯️</div>
+<div id="main" class="hidden">
+  <div class="cake">🎂</div>
+  <div class="name">For Rish ❤️</div>
+  <div id="candles" class="candles">🕯️ 🕯️ 🕯️</div>
+  <button id="blowBtn" onclick="blow()">Make a wish & blow 💨</button>
+  <div id="msg" class="message"></div>
+  <div id="final" class="final hidden">Happy Birthday my love ❤️</div>
+</div>
 
-<button id="blowBtn" class="hidden" onclick="blow()">Blow the candles 💨</button>
-
-<div id="msg" class="message"></div>
-<div id="final" class="final hidden">Happy Birthday my love ❤️</div>
-
-<audio id="music" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_3b7a9d5d6a.mp3" type="audio/mpeg">
+<audio id="music">
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-// show candles
-setTimeout(() => {
-  document.getElementById("candles").classList.remove("hidden");
-  document.getElementById("blowBtn").classList.remove("hidden");
-}, 1500);
+// countdown
+let c = 3;
+const cd = document.getElementById("countdown");
+const main = document.getElementById("main");
 
-// blow candles
+const timer = setInterval(() => {
+  c--;
+  if (c > 0) {
+    cd.innerText = c;
+  } else {
+    clearInterval(timer);
+    cd.style.display = "none";
+    main.classList.remove("hidden");
+  }
+}, 1000);
+
+// blow action
 function blow() {
   document.getElementById("candles").innerHTML = "✨ ✨ ✨";
   document.getElementById("blowBtn").style.display = "none";
   document.getElementById("music").play();
+  confetti();
   typeMessage();
   setTimeout(() => {
     document.getElementById("final").classList.remove("hidden");
-  }, 5500);
+  }, 9000);
 }
 
-// typing effect
-const text = "Missing you today. Even from miles away, you make me feel close, cared for, and loved. I can’t wait to celebrate you properly… with me.";
+// long romantic message
+const text =
+"Missing you extra today. Even with the distance, you make me feel close, safe, and deeply cared for. I love how calm you are, how you make time for me, and how your voice stays with me long after our calls. Today is about you, Rish — and I’m really grateful you’re mine.";
 let i = 0;
 
 function typeMessage() {
   if (i < text.length) {
     document.getElementById("msg").innerHTML += text.charAt(i);
     i++;
-    setTimeout(typeMessage, 50);
+    setTimeout(typeMessage, 40);
   }
 }
 
-// floating hearts
+// hearts
 setInterval(() => {
   const heart = document.createElement("div");
   heart.className = "heart";
@@ -143,6 +172,19 @@ setInterval(() => {
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 6000);
 }, 500);
+
+// confetti blast
+function confetti() {
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.background = ["#ff4d6d","#ffd6e0","#ff85a1"][Math.floor(Math.random()*3)];
+    c.style.animationDuration = (Math.random() * 2 + 2) + "s";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3000);
+  }
+}
 </script>
 
 </body>
