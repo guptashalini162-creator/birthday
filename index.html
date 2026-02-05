@@ -6,145 +6,173 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Segoe UI', sans-serif;
-    overflow: hidden;
-  }
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(180deg, #fff1f6, #ffe4ec);
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .box {
-    background: white;
-    padding: 25px;
-    border-radius: 20px;
-    text-align: center;
-    width: 90%;
-    max-width: 360px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  }
+/* floating hearts */
+.heart {
+  position: absolute;
+  color: #ff6f91;
+  font-size: 18px;
+  animation: fall 6s linear infinite;
+  opacity: 0.8;
+}
 
-  h1 {
-    color: #ff4d6d;
-    margin-bottom: 10px;
-  }
+@keyframes fall {
+  0% { transform: translateY(-10vh); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(110vh); opacity: 0; }
+}
 
-  input {
-    padding: 10px;
-    width: 80%;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-  }
+/* box */
+.box {
+  background: rgba(255,255,255,0.95);
+  padding: 26px;
+  border-radius: 22px;
+  text-align: center;
+  width: 90%;
+  max-width: 360px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  z-index: 2;
+}
 
-  button {
-    padding: 10px 18px;
-    border: none;
-    border-radius: 20px;
-    background: #ff4d6d;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 8px;
-  }
+h1 {
+  color: #ff4d6d;
+  margin-bottom: 12px;
+}
 
-  button:hover {
-    background: #e63950;
-  }
+input {
+  width: 85%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
 
-  #content { display: none; }
+button {
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  background: #ff4d6d;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
 
-  .cake {
-    font-size: 90px;
-    animation: pop 1s ease forwards;
-  }
+button:hover {
+  background: #e63950;
+}
 
-  @keyframes pop {
-    from { transform: scale(0); }
-    to { transform: scale(1); }
-  }
+#content { display: none; }
 
-  .candles {
-    font-size: 40px;
-    margin-top: 10px;
-  }
+.cake {
+  font-size: 90px;
+  animation: pop 1s ease forwards;
+}
 
-  .msg {
-    margin-top: 15px;
-    font-size: 15px;
-    color: #444;
-    line-height: 1.5;
-    display: none;
-  }
+@keyframes pop {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
 
-  .fadeIn {
-    animation: fade 1.5s forwards;
-  }
+.candles {
+  font-size: 40px;
+  margin-top: 8px;
+}
 
-  @keyframes fade {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+.msg {
+  margin-top: 18px;
+  font-size: 15px;
+  color: #444;
+  line-height: 1.6;
+  display: none;
+}
+
+.final {
+  margin-top: 16px;
+  font-size: 22px;
+  color: #ff2f6d;
+  font-weight: 600;
+  animation: glow 2s infinite;
+}
+
+@keyframes glow {
+  0% { text-shadow: 0 0 5px #ff9eb5; }
+  50% { text-shadow: 0 0 18px #ff2f6d; }
+  100% { text-shadow: 0 0 5px #ff9eb5; }
+}
 </style>
 </head>
 
 <body>
 
+<!-- PASSWORD SCREEN -->
 <div class="box" id="login">
-  <h1>🔒 Enter Password</h1>
-  <input type="password" id="pass" placeholder="Hint: someone you love ❤️">
+  <h1>🔒 A little secret</h1>
+  <input type="password" id="pass" placeholder="DDMMYYYY 🤍">
   <br>
-  <button onclick="unlock()">Unlock ✨</button>
+  <button onclick="unlock()">Enter ✨</button>
 </div>
 
+<!-- MAIN CONTENT -->
 <div class="box" id="content">
   <div class="cake">🎂</div>
-
-  <button onclick="playMusic()">Play Music 🎶</button>
-
-  <div class="candles">🕯️🕯️🕯️</div>
-  <button onclick="blow()">Blow the Candles 💨</button>
+  <div class="candles">🕯️ 🕯️ 🕯️</div>
+  <button onclick="blow()">Blow the candles 💨</button>
 
   <div class="msg" id="message">
-    <strong>Happy Birthday my love ❤️</strong><br><br>
-    Missing you a little extra today, Rish. Even with all the distance,
-    you somehow make me feel close, calm and cared for — <em>sach mein</em>.
-    Your presence, your voice, the way you balance everything and still
-    make time for me… it means more than you know 🤍  
-    Can’t wait for the day I celebrate you properly, right next to me ✨
+    Happy Birthday Rish 🤍<br><br>
+    Even from miles away, you somehow feel close —
+    calm, steady, and comforting. The way you manage
+    everything and still choose me in between means
+    more than you’ll ever know… <em>sach mein</em>.
+    I hope today reminds you how loved you are ✨
+  </div>
+
+  <div class="final" id="final" style="display:none;">
+    Happy Birthday my love ❤️
   </div>
 </div>
 
-<audio id="music" loop>
-  <source src="https://cdn.pixabay.com/audio/2022/10/26/audio_6b1c0f4f32.mp3" type="audio/mpeg">
-</audio>
-
 <script>
+// password = 15 October 2025
 function unlock() {
   const p = document.getElementById("pass").value;
-  if (p.toLowerCase() === "rish") {
+  if (p === "15102025") {
     document.getElementById("login").style.display = "none";
     document.getElementById("content").style.display = "block";
   } else {
-    alert("Wrong password 💔");
+    alert("That date means everything 💔");
   }
 }
 
-function playMusic() {
-  const m = document.getElementById("music");
-  m.volume = 0.6;
-  m.play();
+// candle blow
+function blow() {
+  document.querySelector(".candles").innerHTML = "✨ ✨ ✨";
+  document.getElementById("message").style.display = "block";
+  setTimeout(() => {
+    document.getElementById("final").style.display = "block";
+  }, 1800);
 }
 
-function blow() {
-  document.querySelector(".candles").innerHTML = "💨💨💨";
-  const msg = document.getElementById("message");
-  msg.style.display = "block";
-  msg.classList.add("fadeIn");
-}
+// heart rain
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (14 + Math.random() * 10) + "px";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}, 350);
 </script>
 
 </body>
