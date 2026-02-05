@@ -185,4 +185,44 @@ const lines=[
 ];
 let i=0;
 function next(){
-  if(i<lines
+  if(i<lines.length){
+    text.innerText=lines[i++];
+  }else{
+    go(6,7);
+    showPhoto();
+  }
+}
+
+/* PHOTOS */
+const photos=[
+  {src:"photo1.jpeg",cap:"This moment 🤍"},
+  {src:"photo2.jpeg",cap:"This day stayed with me"},
+  {src:"photo3.jpeg",cap:"And this… always will"}
+];
+let p=0;
+function showPhoto(){
+  memory.src=photos[p].src;
+  caption.innerText=photos[p].cap;
+}
+function nextPhoto(){
+  p++;
+  if(p<photos.length){
+    showPhoto();
+  }else{
+    go(7,8);
+    // HEART EXPLOSION 💥
+    clearInterval(interval);
+    speed=70; size=30;
+    interval=setInterval(makeHeart,speed);
+  }
+}
+
+/* STAGE SWITCH */
+function go(a,b){
+  document.getElementById("s"+a).classList.add("hidden");
+  document.getElementById("s"+b).classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
