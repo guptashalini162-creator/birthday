@@ -74,3 +74,78 @@
 
   .msg {
     margin-top: 15px;
+    font-size: 15px;
+    color: #444;
+    line-height: 1.5;
+    display: none;
+  }
+
+  .fadeIn {
+    animation: fade 1.5s forwards;
+  }
+
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="box" id="login">
+  <h1>🔒 Enter Password</h1>
+  <input type="password" id="pass" placeholder="Hint: someone you love ❤️">
+  <br>
+  <button onclick="unlock()">Unlock ✨</button>
+</div>
+
+<div class="box" id="content">
+  <div class="cake">🎂</div>
+
+  <button onclick="playMusic()">Play Music 🎶</button>
+
+  <div class="candles">🕯️🕯️🕯️</div>
+  <button onclick="blow()">Blow the Candles 💨</button>
+
+  <div class="msg" id="message">
+    <strong>Happy Birthday my love ❤️</strong><br><br>
+    Missing you a little extra today, Rish. Even with all the distance,
+    you somehow make me feel close, calm and cared for — <em>sach mein</em>.
+    Your presence, your voice, the way you balance everything and still
+    make time for me… it means more than you know 🤍  
+    Can’t wait for the day I celebrate you properly, right next to me ✨
+  </div>
+</div>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/10/26/audio_6b1c0f4f32.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function unlock() {
+  const p = document.getElementById("pass").value;
+  if (p.toLowerCase() === "rish") {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("content").style.display = "block";
+  } else {
+    alert("Wrong password 💔");
+  }
+}
+
+function playMusic() {
+  const m = document.getElementById("music");
+  m.volume = 0.6;
+  m.play();
+}
+
+function blow() {
+  document.querySelector(".candles").innerHTML = "💨💨💨";
+  const msg = document.getElementById("message");
+  msg.style.display = "block";
+  msg.classList.add("fadeIn");
+}
+</script>
+
+</body>
+</html>
