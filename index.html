@@ -4,139 +4,194 @@
 <meta charset="UTF-8">
 <title>For You ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-  body {
-    margin: 0;
-    background: radial-gradient(circle at top, #1b1b1b, #000);
-    color: white;
-    font-family: 'Segoe UI', sans-serif;
-    text-align: center;
-    overflow: hidden;
-  }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  transition: background 1s ease;
+  background: radial-gradient(circle, #2b1055, #000);
+}
 
-  .screen {
-    display: none;
-    padding: 20px;
-  }
+.screen { display: none; padding: 20px; }
+.active { display: block; }
 
-  .active {
-    display: block;
-  }
+button {
+  padding: 12px 24px;
+  border-radius: 25px;
+  border: none;
+  background: #ff5c8d;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 25px;
+}
 
-  button {
-    margin-top: 25px;
-    padding: 12px 22px;
-    font-size: 16px;
-    border: none;
-    border-radius: 25px;
-    background: #ff5c8d;
-    color: white;
-    cursor: pointer;
-  }
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  text-align: center;
+  font-size: 16px;
+}
 
-  .cake {
-    font-size: 90px;
-  }
+.cake { font-size: 90px; }
 
-  .photo {
-    width: 80%;
-    max-width: 260px;
-    border-radius: 14px;
-    margin: 15px auto;
-    opacity: 0;
-    transform: scale(0.8);
-    transition: all 0.8s ease;
-  }
+.photo {
+  width: 80%;
+  max-width: 260px;
+  border-radius: 14px;
+  margin: 12px auto;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.8s ease;
+}
 
-  .photo.show {
-    opacity: 1;
-    transform: scale(1);
-  }
+.photo.show {
+  opacity: 1;
+  transform: scale(1);
+}
 
-  .heart {
-    position: fixed;
-    top: -10px;
-    font-size: 20px;
-    animation: fall linear forwards;
-    pointer-events: none;
-  }
+.title {
+  font-size: 18px;
+  margin-top: 10px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
 
-  @keyframes fall {
-    to {
-      transform: translateY(110vh);
-      opacity: 0;
-    }
-  }
+.title.show { opacity: 1; }
+
+.heart {
+  position: fixed;
+  top: -10px;
+  font-size: 20px;
+  animation: fall linear forwards;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to { transform: translateY(110vh); opacity: 0; }
+}
 </style>
 </head>
+
 <body>
 
-<!-- SCREEN 1 -->
+<!-- SCREEN 1 PASSWORD -->
 <div class="screen active" id="s1">
-  <h2>Something special for you 🤍</h2>
-  <button onclick="go(2)">Tap</button>
+  <h2>Enter the password 🤍</h2>
+  <input type="password" id="pwd" placeholder="••••">
+  <br>
+  <button onclick="checkPwd()">Unlock</button>
+  <p id="err" style="color:#ff9aa2;"></p>
 </div>
 
 <!-- SCREEN 2 -->
 <div class="screen" id="s2">
+  <h2>Something special for you 🤍</h2>
+  <button onclick="go(3)">Tap</button>
+</div>
+
+<!-- SCREEN 3 -->
+<div class="screen" id="s3">
   <div class="cake">🎂</div>
   <p>Press to blow 🕯️</p>
-  <button onclick="go(3)">Press</button>
+  <button onclick="go(4)">Press</button>
 </div>
 
-<!-- SCREEN 3 : PHOTOS FIRST -->
-<div class="screen" id="s3">
-  <img src="photo1.jpeg" class="photo" id="p1">
-  <img src="photo2.jpeg" class="photo" id="p2">
-  <img src="photo3.jpeg" class="photo" id="p3">
-  <button id="nextBtn" style="display:none;" onclick="go(4)">Tap</button>
-</div>
-
-<!-- SCREEN 4 : FINAL MESSAGE -->
+<!-- SCREEN 4 PHOTOS -->
 <div class="screen" id="s4">
+  <img src="photo1.jpeg" class="photo" id="p1">
+  <div class="title" id="t1">Us 🤍</div>
+
+  <img src="photo2.jpeg" class="photo" id="p2">
+  <div class="title" id="t2">My favourite memory</div>
+
+  <img src="photo3.jpeg" class="photo" id="p3">
+  <div class="title" id="t3">Always you ❤️</div>
+
+  <button id="nextBtn" style="display:none;" onclick="go(5)">Tap</button>
+</div>
+
+<!-- SCREEN 5 FINAL -->
+<div class="screen" id="s5">
   <h2>Happy Birthday my love ❤️</h2>
   <p>
     Missing you a little extra today.  
-    Even from miles away, you make me feel cared for and close — sach mein.  
-    Your calm, your warmth, the way you show up… it all means more than you know 🤍
+    Even from miles away, you make me feel close and cared for — sach mein.  
+    Your calm, your warmth, and the way you show up for me mean everything 🤍
   </p>
 </div>
 
 <script>
-  function go(n) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById('s' + n).classList.add('active');
+const backgrounds = [
+  "radial-gradient(circle, #2b1055, #000)",
+  "radial-gradient(circle, #3a1c71, #000)",
+  "radial-gradient(circle, #41295a, #000)",
+  "radial-gradient(circle, #5f2c82, #000)",
+  "radial-gradient(circle, #ff758c, #000)"
+];
 
-    if (n === 3) showPhotos();
-    if (n === 4) heartRain(120);
+let step = 0;
+
+function setBg() {
+  document.body.style.background = backgrounds[step % backgrounds.length];
+  step++;
+}
+
+function checkPwd() {
+  const pwd = document.getElementById("pwd").value;
+  if (pwd === "0702") {
+    go(2);
+  } else {
+    document.getElementById("err").innerText = "Wrong password 💔";
   }
+}
 
-  function showPhotos() {
-    const photos = ['p1','p2','p3'];
-    photos.forEach((id, i) => {
-      setTimeout(() => {
-        document.getElementById(id).classList.add('show');
-      }, i * 600);
-    });
+function go(n) {
+  setBg();
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('s' + n).classList.add('active');
 
+  if (n === 4) showPhotos();
+  if (n === 5) heartRain(180);
+}
+
+function showPhotos() {
+  const items = [
+    ['p1','t1'],
+    ['p2','t2'],
+    ['p3','t3']
+  ];
+
+  items.forEach((pair, i) => {
     setTimeout(() => {
-      document.getElementById('nextBtn').style.display = 'inline-block';
-    }, 2000);
-  }
+      document.getElementById(pair[0]).classList.add('show');
+      document.getElementById(pair[1]).classList.add('show');
+    }, i * 1200);
+  });
 
-  function heartRain(count) {
-    for (let i = 0; i < count; i++) {
-      setTimeout(() => {
-        const h = document.createElement('div');
-        h.className = 'heart';
-        h.innerText = '❤️';
-        h.style.left = Math.random() * 100 + 'vw';
-        h.style.animationDuration = (2 + Math.random() * 3) + 's';
-        document.body.appendChild(h);
-        setTimeout(() => h.remove(), 5000);
-      }, i * 80);
-    }
+  setTimeout(() => {
+    document.getElementById('nextBtn').style.display = 'inline-block';
+  }, 4200);
+}
+
+function heartRain(count) {
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => {
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.innerText = '❤️';
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.animationDuration = (2 + Math.random() * 3) + 's';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 5000);
+    }, i * 60);
   }
+}
 </script>
 
 </body>
