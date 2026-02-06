@@ -2,226 +2,141 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Happy Birthday Rish ❤️</title>
+<title>For You ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
-body{
-  margin:0;
-  height:100vh;
-  background:linear-gradient(180deg,#fff1f6,#ffe4ec);
-  font-family:'Segoe UI',sans-serif;
-  overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
+  body {
+    margin: 0;
+    background: radial-gradient(circle at top, #1b1b1b, #000);
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    overflow: hidden;
+  }
 
-/* HEARTS */
-.heart{
-  position:absolute;
-  animation:fall linear forwards;
-  opacity:0.9;
-}
-@keyframes fall{
-  from{transform:translateY(-10vh);}
-  to{transform:translateY(110vh);}
-}
+  .screen {
+    display: none;
+    padding: 20px;
+  }
 
-/* BOX */
-.box{
-  background:rgba(255,255,255,0.96);
-  padding:26px;
-  border-radius:22px;
-  text-align:center;
-  width:90%;
-  max-width:360px;
-  box-shadow:0 15px 40px rgba(0,0,0,0.15);
-  z-index:2;
-}
+  .active {
+    display: block;
+  }
 
-.hidden{display:none;}
-h1{color:#ff4d6d;}
-p{color:#555;}
+  button {
+    margin-top: 25px;
+    padding: 12px 22px;
+    font-size: 16px;
+    border: none;
+    border-radius: 25px;
+    background: #ff5c8d;
+    color: white;
+    cursor: pointer;
+  }
 
-input{
-  width:85%;
-  padding:10px;
-  border-radius:12px;
-  border:1px solid #ccc;
-}
+  .cake {
+    font-size: 90px;
+  }
 
-button{
-  padding:10px 22px;
-  border-radius:25px;
-  border:none;
-  background:#ff4d6d;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-  margin-top:10px;
-}
+  .photo {
+    width: 80%;
+    max-width: 260px;
+    border-radius: 14px;
+    margin: 15px auto;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.8s ease;
+  }
 
-.cake{font-size:90px;}
-.candles{font-size:40px;}
+  .photo.show {
+    opacity: 1;
+    transform: scale(1);
+  }
 
-.photo{
-  width:100%;
-  border-radius:16px;
-  margin-top:10px;
-}
+  .heart {
+    position: fixed;
+    top: -10px;
+    font-size: 20px;
+    animation: fall linear forwards;
+    pointer-events: none;
+  }
 
-.glow{
-  font-size:24px;
-  color:#ff2f6d;
-  animation:glow 2s infinite;
-}
-@keyframes glow{
-  0%{text-shadow:0 0 5px #ff9eb5;}
-  50%{text-shadow:0 0 20px #ff2f6d;}
-  100%{text-shadow:0 0 5px #ff9eb5;}
-}
+  @keyframes fall {
+    to {
+      transform: translateY(110vh);
+      opacity: 0;
+    }
+  }
 </style>
 </head>
-
 <body>
 
-<!-- STAGE 1 -->
-<div class="box" id="s1">
-  <h1>🔒 A little secret</h1>
-  <p>Enter the date that changed things 🤍</p>
-  <input id="pass" placeholder="DDMMYYYY">
-  <br><button onclick="check()">Enter ✨</button>
+<!-- SCREEN 1 -->
+<div class="screen active" id="s1">
+  <h2>Something special for you 🤍</h2>
+  <button onclick="go(2)">Tap</button>
 </div>
 
-<!-- STAGE 2 -->
-<div class="box hidden" id="s2">
-  <p>Tap anywhere 3 times… slowly 🤍</p>
-</div>
-
-<!-- STAGE 3 -->
-<div class="box hidden" id="s3">
+<!-- SCREEN 2 -->
+<div class="screen" id="s2">
   <div class="cake">🎂</div>
-  <p>It’s your day</p>
-  <button onclick="go(3,4)">Next 🎉</button>
+  <p>Press to blow 🕯️</p>
+  <button onclick="go(3)">Press</button>
 </div>
 
-<!-- STAGE 4 -->
-<div class="box hidden" id="s4">
-  <div class="candles">🕯️ 🕯️ 🕯️</div>
-  <p>Press & hold to blow</p>
-  <button onmousedown="hold=true" onmouseup="blow()">Blow 💨</button>
+<!-- SCREEN 3 : PHOTOS FIRST -->
+<div class="screen" id="s3">
+  <img src="photo1.jpeg" class="photo" id="p1">
+  <img src="photo2.jpeg" class="photo" id="p2">
+  <img src="photo3.jpeg" class="photo" id="p3">
+  <button id="nextBtn" style="display:none;" onclick="go(4)">Tap</button>
 </div>
 
-<!-- STAGE 5 -->
-<div class="box hidden" id="s5">
-  <p>Ready for something special? 🤍</p>
-  <button onclick="go(5,6)">Yes</button>
-</div>
-
-<!-- STAGE 6: MESSAGE -->
-<div class="box hidden" id="s6">
-  <p id="text"></p>
-  <button onclick="next()">Tap 🤍</button>
-</div>
-
-<!-- STAGE 7: PHOTOS -->
-<div class="box hidden" id="s7">
-  <img id="memory" class="photo">
-  <p id="caption"></p>
-  <button onclick="nextPhoto()">Tap 🤍</button>
-</div>
-
-<!-- STAGE 8 -->
-<div class="box hidden" id="s8">
-  <p class="glow">Happy Birthday my love ❤️</p>
+<!-- SCREEN 4 : FINAL MESSAGE -->
+<div class="screen" id="s4">
+  <h2>Happy Birthday my love ❤️</h2>
+  <p>
+    Missing you a little extra today.  
+    Even from miles away, you make me feel cared for and close — sach mein.  
+    Your calm, your warmth, the way you show up… it all means more than you know 🤍
+  </p>
 </div>
 
 <script>
-/* HEARTS */
-let speed=600,size=20;
-let interval=setInterval(makeHeart,speed);
-function makeHeart(){
-  const h=document.createElement("div");
-  h.className="heart";
-  h.innerHTML="❤️";
-  h.style.left=Math.random()*100+"vw";
-  h.style.fontSize=(size+Math.random()*12)+"px";
-  h.style.animationDuration=(3+Math.random()*2)+"s";
-  document.body.appendChild(h);
-  setTimeout(()=>h.remove(),5000);
-}
+  function go(n) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('s' + n).classList.add('active');
 
-/* PASSWORD */
-function check(){
-  if(pass.value==="15102025")go(1,2);
-  else alert("That date matters 💔");
-}
-
-/* TAP */
-let taps=0;
-document.addEventListener("click",()=>{
-  if(!s2.classList.contains("hidden")){
-    taps++;
-    if(taps===3)go(2,3);
+    if (n === 3) showPhotos();
+    if (n === 4) heartRain(120);
   }
-});
 
-/* CANDLES */
-let hold=false;
-function blow(){
-  if(hold){
-    document.querySelector(".candles").innerHTML="✨ ✨ ✨";
-    go(4,5);
+  function showPhotos() {
+    const photos = ['p1','p2','p3'];
+    photos.forEach((id, i) => {
+      setTimeout(() => {
+        document.getElementById(id).classList.add('show');
+      }, i * 600);
+    });
+
+    setTimeout(() => {
+      document.getElementById('nextBtn').style.display = 'inline-block';
+    }, 2000);
   }
-}
 
-/* MESSAGE */
-const lines=[
-  "Happy Birthday Rish 🤍",
-  "Even with distance, you feel close.",
-  "Calm. Caring. Steady. Sach mein.",
-  "Now… some memories 🫶"
-];
-let i=0;
-function next(){
-  if(i<lines.length){
-    text.innerText=lines[i++];
-  }else{
-    go(6,7);
-    showPhoto();
+  function heartRain(count) {
+    for (let i = 0; i < count; i++) {
+      setTimeout(() => {
+        const h = document.createElement('div');
+        h.className = 'heart';
+        h.innerText = '❤️';
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.animationDuration = (2 + Math.random() * 3) + 's';
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 5000);
+      }, i * 80);
+    }
   }
-}
-
-/* PHOTOS */
-const photos=[
-  {src:"photo1.jpeg",cap:"This moment 🤍"},
-  {src:"photo2.jpeg",cap:"This day stayed with me"},
-  {src:"photo3.jpeg",cap:"And this… always will"}
-];
-let p=0;
-function showPhoto(){
-  memory.src=photos[p].src;
-  caption.innerText=photos[p].cap;
-}
-function nextPhoto(){
-  p++;
-  if(p<photos.length){
-    showPhoto();
-  }else{
-    go(7,8);
-    // HEART EXPLOSION 💥
-    clearInterval(interval);
-    speed=70; size=30;
-    interval=setInterval(makeHeart,speed);
-  }
-}
-
-/* STAGE SWITCH */
-function go(a,b){
-  document.getElementById("s"+a).classList.add("hidden");
-  document.getElementById("s"+b).classList.remove("hidden");
-}
 </script>
 
 </body>
