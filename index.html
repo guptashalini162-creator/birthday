@@ -48,14 +48,15 @@ input {
   animation: fadeIn 1s ease;
 }
 
-.title {
-  font-size: 18px;
-  margin-top: 14px;
-  opacity: 0.9;
+.text {
+  margin-top: 18px;
+  font-size: 15px;
+  line-height: 1.6;
+  opacity: 0.95;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.85); }
+  from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
 
@@ -94,32 +95,36 @@ input {
 <!-- SCREEN 3 PHOTO 1 -->
 <div class="screen" id="s3">
   <img src="photo1.jpeg" class="photo">
-  <div class="title">Us 🤍</div>
+  <div class="text">
+    This picture always takes me back to where it all began. That rainy night, the waiting, your smile — everything felt uncertain, yet calm. Looking back now, I’m just grateful that day happened, because it led me to you. On your birthday, I smile thinking how one ordinary evening became the start of something special 🤍
+  </div>
   <button onclick="go(4)">Tap</button>
 </div>
 
 <!-- SCREEN 4 PHOTO 2 -->
 <div class="screen" id="s4">
   <img src="photo2.jpeg" class="photo">
-  <div class="title">My favourite memory ✨</div>
+  <div class="text">
+    This was the day conversations became longer and smiles came easier. We walked, talked, laughed, and time felt slower. I didn’t know it then, but I was already falling for the way you made everything feel lighter. On your birthday, this memory reminds me how lucky I am to have met you ✨
+  </div>
   <button onclick="go(5)">Tap</button>
 </div>
 
 <!-- SCREEN 5 PHOTO 3 -->
 <div class="screen" id="s5">
   <img src="photo3.jpeg" class="photo">
-  <div class="title">Always you ❤️</div>
+  <div class="text">
+    This day was full of little gestures — the kind that stay quietly in the heart. You asking me to try the ring, helping me with my helmet, those shy moments in between. On your birthday, this memory reminds me how caring you are, and how safe you make me feel 🤍
+  </div>
   <button onclick="go(6)">Tap</button>
 </div>
 
 <!-- SCREEN 6 FINAL -->
 <div class="screen" id="s6">
   <h2>Happy Birthday my love ❤️</h2>
-  <p>
-    Missing you a little extra today.  
-    Even from miles away, you make me feel close and cared for — sach mein.  
-    Your calm, your warmth, and the way you show up mean everything to me 🤍
-  </p>
+  <div class="text">
+    Today isn’t just about candles or wishes, it’s about celebrating you — the calm you bring, the care you show, and the way you make even ordinary moments meaningful. Every memory we’ve made holds a piece of you. I hope this year gives you everything you deserve, and I hope I get to be a part of it 🤍
+  </div>
 </div>
 
 <script>
@@ -151,7 +156,7 @@ function go(n) {
   setBg();
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('s' + n).classList.add('active');
-  if (n === 6) heartRain(200);
+  if (n === 6) heartRain(220);
 }
 
 function heartRain(count) {
@@ -164,7 +169,7 @@ function heartRain(count) {
       h.style.animationDuration = (2 + Math.random() * 3) + 's';
       document.body.appendChild(h);
       setTimeout(() => h.remove(), 5000);
-    }, i * 50);
+    }, i * 45);
   }
 }
 </script>
