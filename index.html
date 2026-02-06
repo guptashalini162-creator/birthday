@@ -52,7 +52,6 @@ input {
   margin-top: 18px;
   font-size: 15px;
   line-height: 1.6;
-  opacity: 0.95;
 }
 
 @keyframes fadeIn {
@@ -75,6 +74,11 @@ input {
 </head>
 
 <body>
+
+<!-- 🎵 BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <!-- SCREEN 1 PASSWORD -->
 <div class="screen active" id="s1">
@@ -137,15 +141,26 @@ const backgrounds = [
 ];
 
 let step = 0;
+let musicStarted = false;
 
 function setBg() {
   document.body.style.background = backgrounds[step % backgrounds.length];
   step++;
 }
 
+function startMusic() {
+  if (!musicStarted) {
+    const music = document.getElementById("bgMusic");
+    music.volume = 0.4; // soft & romantic
+    music.play().catch(() => {});
+    musicStarted = true;
+  }
+}
+
 function checkPwd() {
   const pwd = document.getElementById("pwd").value;
   if (pwd === "0702") {
+    startMusic(); // 🎵 starts here
     go(2);
   } else {
     document.getElementById("err").innerText = "Wrong password 💔";
